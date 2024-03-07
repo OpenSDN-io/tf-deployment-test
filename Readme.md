@@ -7,7 +7,7 @@ Use the same machine you've just run tf-devstack. The code uses $HOME/.tf/stack.
 To run this locally from scratch:
 
 ```bash
-git clone https://github.com/tungstenfabric/tf-deployment-test.git
+git clone https://github.com/opensdn-io/tf-deployment-test.git
 cd tf-deployment-test
 ./build-containers.sh
 ./testrunner.sh
@@ -29,7 +29,7 @@ sudo docker cp $tmp_name:/testrunner.sh ./testrunner.sh
 sudo docker rm $tmp_name
 
 # optinally clone the repo
-git clone https://github.com/tungstenfabric/tf-deployment-test.git
+git clone https://github.com/opensdn-io/tf-deployment-test.git
 
 # run it
 ./testrunner.sh

@@ -7,7 +7,7 @@ cd ~
 source stackrc
 source rhosp-environment.sh
 
-registry=${CONTAINER_REGISTRY:-'docker.io/tungstenfabric'}
+registry=${CONTAINER_REGISTRY:-'docker.io/opensdn'}
 tag=${CONTRAIL_CONTAINER_TAG:-'latest'}
 
 export undercloud_registry_contrail=${prov_ip}:8787

@@ -28,7 +28,7 @@ if [[ -d $DEVSTACK_PATH ]]; then
   #Updating ENVIRONMENT_OS, rhosp and rhel versions in rhosp-environment.sh
   update_rhosp_environment_sh rhosp-environment.sh
 else 
-  echo "ERROR: tf-devstack not found at $DEVSTACK_PATH. Make cd; git clone https://github.com/tungstenfabric/tf-devstack.git or define variable DEVSTACK_PATH"
+  echo "ERROR: tf-devstack not found at $DEVSTACK_PATH. Make cd; git clone https://github.com/opensdn-io/tf-devstack.git or define variable DEVSTACK_PATH"
   exit 1
 fi
 

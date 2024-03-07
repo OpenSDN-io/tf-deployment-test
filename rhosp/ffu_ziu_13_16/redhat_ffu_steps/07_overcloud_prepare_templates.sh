@@ -24,7 +24,7 @@ fi
 #rm -rf tripleo-heat-templates
 #cp -r /usr/share/openstack-tripleo-heat-templates tripleo-heat-templates
 #rm -rf tf-tripleo-heat-templates
-#git clone https://github.com/tungstenfabric/tf-tripleo-heat-templates.git -b stable/train
+#git clone https://github.com/opensdn-io/tf-tripleo-heat-templates.git -b stable/train
 #cp -r tf-tripleo-heat-templates/* tripleo-heat-templates/
 
 
