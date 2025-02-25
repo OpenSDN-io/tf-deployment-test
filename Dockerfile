@@ -14,7 +14,7 @@ RUN cp /tf-deployment-test/testrunner.sh / && \
     fi && \
     yum update -y -x "redhat-release*" -x "coreutils*" && \
     yum -y update-minimal --security --sec-severity=Important --sec-severity=Critical && \
-    yum install -y python3 rsync openssh-clients && \
+    yum install -y python3 python3-pip rsync openssh-clients && \
     pip3 install --upgrade --no-compile pip && \
     pip3 install --no-compile -r /tf-deployment-test/requirements.txt && \
     pip3 install --force urllib3==1.24.2 && \
