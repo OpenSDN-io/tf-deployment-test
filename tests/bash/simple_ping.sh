@@ -24,7 +24,7 @@ metadata:
 spec:
     containers:
     - name: centos
-      image: centos
+      image: centos:7
       imagePullPolicy: IfNotPresent
       args:
       - sleep
