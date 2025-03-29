@@ -32,8 +32,8 @@ function docker_run_test_image() {
   vol_opts+=" -v $scriptdir/output:/output"
   # NOTE: to be able to have sources locally that will be executed
   # user can clone this repo from script dir and it will be used as a source code
-  if [ -d $scriptdir/tf-deployment-test ]; then
-    vol_opts+=" -v $scriptdir/tf-deployment-test:/tf-deployment-test"
+  if [ -d $scriptdir/opensdn-deployment-test ]; then
+    vol_opts+=" -v $scriptdir/opensdn-deployment-test:/opensdn-deployment-test"
   fi
 
   sudo docker pull $image
@@ -55,8 +55,8 @@ function ctr_run_test_image() {
   vol_opts+="  --mount type=bind,src=$scriptdir/output,dst=/output,options=rbind:rw"
   # NOTE: to be able to have sources locally that will be executed
   # user can clone this repo from script dir and it will be used as a source code
-  if [ -d $scriptdir/tf-deployment-test ]; then
-    vol_opts+=" --mount type=bind,src=$scriptdir/tf-deployment-test,dst=/tf-deployment-test,options=rbind:rw"
+  if [ -d $scriptdir/opensdn-deployment-test ]; then
+    vol_opts+=" --mount type=bind,src=$scriptdir/opensdn-deployment-test,dst=/opensdn-deployment-test,options=rbind:rw"
   fi
   vol_opts+=" --mount type=bind,src=/run/containerd,dst=/run/containerd,options=rbind:rw"
   vol_opts+=" --mount type=bind,src=/sys/fs/cgroup,dst=/sys/fs/cgroup,options=rbind:rw"
@@ -89,7 +89,7 @@ echo "DEPLOYMENT_TEST_TAGS=$DEPLOYMENT_TEST_TAGS" >> $TEST_ENV_FILE
 
 cat $TEST_ENV_FILE
 
-TF_DEPLOYMENT_TEST_IMAGE="${TF_DEPLOYMENT_TEST_IMAGE:-${CONTAINER_REGISTRY}/tf-deployment-test:${CONTRAIL_CONTAINER_TAG}}"
+TF_DEPLOYMENT_TEST_IMAGE="${TF_DEPLOYMENT_TEST_IMAGE:-${CONTAINER_REGISTRY}/opensdn-deployment-test:${CONTRAIL_CONTAINER_TAG}}"
 if [[ $RUNTIME == docker ]] ; then
   docker_run_test_image $TF_DEPLOYMENT_TEST_IMAGE || res=1
 elif [[ $RUNTIME == containerd ]] ; then

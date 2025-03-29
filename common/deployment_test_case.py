@@ -84,7 +84,7 @@ class DeploymentTestCase(testtools.testcase.WithAttributes, testtools.TestCase):
         nodes = self.controller_nodes + self.agent_nodes
         for node in nodes:
             host_fixture = self.useFixture(HostFixture(node, self.ssh_user, self.logger))
-            result = host_fixture.exec_command_result('sudo contrail-status --format json')
+            result = host_fixture.exec_command_result('sudo opensdn-status --format json')
             containers = json.loads(result.replace('\\"', '').replace('\\', '')).get('containers')
             for key in containers:
                 if containers[key].get('Original Version') != tag:

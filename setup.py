@@ -2,5 +2,5 @@ from setuptools import setup
 
 
 setup(
-    name='tf-deployment-test',
+    name='opensdn-deployment-test',
 )

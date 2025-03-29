@@ -118,7 +118,7 @@ units_count=$((ac + adbc + cc + kmc))
 echo "INFO: Count of units in control plane = $units_count. Start ZIU...  $(date)"
 
 # load last charms
-tf_charms_src_image=${TF_CHARMS_SRC:-"tf-charms-src"}
+tf_charms_src_image=${TF_CHARMS_SRC:-"opensdn-charms-src"}
 tf_charms_dir=${TF_CHARMS_DIR:-"${HOME}/tf-charms"}
 charms_to_upgrade="analytics analyticsdb controller agent keystone-auth kubernetes-node openstack"
 
@@ -132,7 +132,7 @@ echo "INFO: charms branch"
 git branch -a -vv
 popd
 
-# upgrade tf-kubernetes-master
+# upgrade kubernetes-master
 # now it should be upgraded before ziu start, R2011 charm do not have ziu info in config
 # TODO: try to fix it
 if echo "$juju_status" | grep -q "tf-kubernetes-master " ; then

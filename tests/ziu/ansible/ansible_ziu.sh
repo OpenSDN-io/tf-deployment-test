@@ -10,10 +10,10 @@ export CONTRAIL_CONTAINER_TAG="$CONTRAIL_CONTAINER_TAG_ORIGINAL"
 export SSH_OPTIONS=${SSH_OPTIONS:-"-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"}
 
 # working environment
-tf_deployer_dir=${TF_ANSIBLE_DEPLOYER_DIR:-"${HOME}/tf-ansible-deployer"}
-openstack_deployer_dir=${HOME}/contrail-kolla-ansible
-tf_deployer_image=${TF_ANSIBLE_DEPLOYER:-"tf-ansible-deployer-src"}
-openstack_deployer_image=${OPENSTACK_DEPLOYER:-"tf-kolla-ansible-src"}
+tf_deployer_dir=${TF_ANSIBLE_DEPLOYER_DIR:-"${HOME}/opensdn-ansible-deployer"}
+openstack_deployer_dir=${HOME}/opensdn-kolla-ansible
+tf_deployer_image=${TF_ANSIBLE_DEPLOYER:-"opensdn-ansible-deployer-src"}
+openstack_deployer_image=${OPENSTACK_DEPLOYER:-"opensdn-kolla-ansible-src"}
 
 function fetch_deployer() {
   # pull deployer src container locally and extract files to path
@@ -57,10 +57,10 @@ function check_tf_active() {
   local machine
   local line=
   for machine in $(echo "$CONTROLLER_NODES $AGENT_NODES" | tr " " "\n" | sort -u) ; do
-    if ! ssh $SSH_OPTIONS $machine "command -v contrail-status" 2>/dev/null ; then
+    if ! ssh $SSH_OPTIONS $machine "command -v opensdn-status" 2>/dev/null ; then
       return 1
     fi
-    for line in $(ssh $SSH_OPTIONS $machine "sudo contrail-status" 2>/dev/null | egrep ": " | grep -v "WARNING" | awk '{print $2}'); do
+    for line in $(ssh $SSH_OPTIONS $machine "sudo opensdn-status" 2>/dev/null | egrep ": " | grep -v "WARNING" | awk '{print $2}'); do
       if [ "$line" != "active" ] && [ "$line" != "backup" ] ; then
         return 1
       fi

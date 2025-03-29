@@ -19,7 +19,7 @@ Also user can clone this repo to the same place as testrunner.sh to be able to h
 
 ```bash
 set -a ; source $HOME/.tf/stack.env ; set +a
-TF_DEPLOYMENT_TEST_IMAGE="${CONTAINER_REGISTRY}/tf-deployment-test:${CONTRAIL_CONTAINER_TAG}"
+TF_DEPLOYMENT_TEST_IMAGE="${CONTAINER_REGISTRY}/opensdn-deployment-test:${CONTRAIL_CONTAINER_TAG}"
 
 # copy testrunner.sh locally
 sudo docker pull $TF_DEPLOYMENT_TEST_IMAGE
@@ -49,7 +49,7 @@ Now you are inside container with tests. You can edit code and run it.
 ```bash
 set -a ; source /input/test.env ; set +a
 eval export $(sed 's/=.*//' /input/test.env)
-cd /tf-deployment-test
+cd /opensdn-deployment-test
 testr run
 ```
 

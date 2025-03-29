@@ -28,7 +28,7 @@ class HostFixture(fixtures.Fixture):
                     path, f"{self.ssh_user}@{self.ssh_host}:/tmp/"])
 
     def _setUp(self):
-        self._rsync_data("/tf-deployment-test")
+        self._rsync_data("/opensdn-deployment-test")
         self._rsync_data("/input/test.env")
 
     def _get_connection(self):
@@ -51,7 +51,7 @@ class HostFixture(fixtures.Fixture):
                 stream.flush()
 
     def get_remote_path(self, local_file_path):
-        return os.path.join("/tmp/tf-deployment-test", local_file_path)
+        return os.path.join("/tmp/opensdn-deployment-test", local_file_path)
 
     def exec_command(self, command, fout=None, ferr=None, timeout=5, log_output=False):
         with self._get_connection() as ssh:

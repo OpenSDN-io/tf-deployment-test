@@ -38,10 +38,10 @@ function check_tf_active() {
     local machine
     local line=
     for machine in $(echo "$AGENT_NODES,$CONTROLLER_NODES" | sed "s/,/ /g"); do
-        if ! ssh $SSH_OPTIONS $machine "command -v contrail-status" 2>/dev/null ; then
+        if ! ssh $SSH_OPTIONS $machine "command -v opensdn-status" 2>/dev/null ; then
             return 1
         fi
-        for line in $(ssh $SSH_OPTIONS $machine "sudo contrail-status" 2>/dev/null | egrep ": " | grep -v "WARNING" | awk '{print $2}'); do
+        for line in $(ssh $SSH_OPTIONS $machine "sudo opensdn-status" 2>/dev/null | egrep ": " | grep -v "WARNING" | awk '{print $2}'); do
             if [ "$line" != "active" ] && [ "$line" != "backup" ] ; then
                 return 1
             fi
