@@ -10,8 +10,8 @@ export CONTRAIL_CONTAINER_TAG="$CONTRAIL_CONTAINER_TAG_ORIGINAL"
 export SSH_OPTIONS=${SSH_OPTIONS:-"-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"}
 
 # working environment
-tf_deployer_dir=${TF_ANSIBLE_DEPLOYER_DIR:-"${HOME}/opensdn-ansible-deployer"}
-openstack_deployer_dir=${HOME}/opensdn-kolla-ansible
+tf_deployer_dir=${TF_ANSIBLE_DEPLOYER_DIR:-"$HOME/opensdn-ansible-deployer"}
+openstack_deployer_dir=$HOME/opensdn-kolla-ansible
 tf_deployer_image=${TF_ANSIBLE_DEPLOYER:-"opensdn-ansible-deployer-src"}
 openstack_deployer_image=${OPENSTACK_DEPLOYER:-"opensdn-kolla-ansible-src"}
 
@@ -79,14 +79,21 @@ cp $TF_CONFIG_DIR/instances.yaml $TF_CONFIG_DIR/ziu_instances.yaml
 sed -i "s/CONTRAIL_CONTAINER_TAG:.*/CONTRAIL_CONTAINER_TAG: $CONTRAIL_CONTAINER_TAG/g" $TF_CONFIG_DIR/ziu_instances.yaml
 sed -i "s/CONTAINER_REGISTRY:.*/CONTAINER_REGISTRY: $CONTAINER_REGISTRY/g" $TF_CONFIG_DIR/ziu_instances.yaml
 
+# create virtualenv
+virtualenv $HOME/.venv.ziu
+source $HOME/.venv.ziu/bin/activate
+
+# jinja is reqiured to create some configs
+LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 python3 -m pip install --upgrade "$ansible_pkg" 'jinja2==3.0.3' pyopenssl requests
+
 # Run controller stage of ziu.yml
-sudo -E ansible-playbook -v -e stage=controller -e orchestrator=openstack -e config_file=$TF_CONFIG_DIR/ziu_instances.yaml playbooks/ziu.yml
+ansible-playbook -v -e stage=controller -e orchestrator=openstack -e config_file=$TF_CONFIG_DIR/ziu_instances.yaml playbooks/ziu.yml
 
 # Run openstack stage of ziu.yml
-sudo -E ansible-playbook -v -e stage=openstack -e orchestrator=openstack -e config_file=$TF_CONFIG_DIR/ziu_instances.yaml playbooks/ziu.yml
+ansible-playbook -v -e stage=openstack -e orchestrator=openstack -e config_file=$TF_CONFIG_DIR/ziu_instances.yaml playbooks/ziu.yml
 
 # Run compute stage of ziu.yml
-sudo -E ansible-playbook -v -e stage=compute -e orchestrator=openstack -e config_file=$TF_CONFIG_DIR/ziu_instances.yaml playbooks/ziu.yml
+ansible-playbook -v -e stage=compute -e orchestrator=openstack -e config_file=$TF_CONFIG_DIR/ziu_instances.yaml playbooks/ziu.yml
 
 if ! wait_cmd_success 10 60 "check_tf_active" ; then
     echo "ERROR: tf is not active after ziu"
