@@ -12,6 +12,10 @@ RUN cp /opensdn-deployment-test/testrunner.sh / && \
     if [[ -d /opensdn-deployment-test/mirrors && -n "$(ls /opensdn-deployment-test/mirrors/*.repo)" ]] ; then \
         cp /opensdn-deployment-test/mirrors/*.repo /etc/yum.repos.d/ ; \
     fi && \
+    if [[ "$LINUX_DISTR" == "centos" ]]; then \
+        for file in /etc/yum.repos.d/rdo-* ; do grep -v mirrorlist= "$file" > "$file".new && mv "$file".new "$file" ; done ; \
+        sed -i 's|#\s*baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/rdo-* ; \
+    fi ; \
     yum update -y -x "redhat-release*" -x "coreutils*" && \
     yum -y update-minimal --security --sec-severity=Important --sec-severity=Critical && \
     yum install -y python3 python3-pip rsync openssh-clients && \
