@@ -15,6 +15,9 @@ RUN cp /opensdn-deployment-test/testrunner.sh / && \
     if [[ "$LINUX_DISTR" == "centos" ]]; then \
         for file in /etc/yum.repos.d/rdo-* ; do grep -v mirrorlist= "$file" > "$file".new && mv "$file".new "$file" ; done ; \
         sed -i 's|#\s*baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/rdo-* ; \
+        find /etc/yum.repos.d/ | grep -i rocky | xargs -r rm ; ls -l /etc/yum.repos.d/ ; \
+    else \
+        find /etc/yum.repos.d/ | grep -i centos | xargs -r rm ; ls -l /etc/yum.repos.d/ ; \
     fi ; \
     yum update -y -x "redhat-release*" -x "coreutils*" && \
     yum -y update-minimal --security --sec-severity=Important --sec-severity=Critical && \
