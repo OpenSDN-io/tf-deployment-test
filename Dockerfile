@@ -1,6 +1,7 @@
 ARG LINUX_DISTR=centos
 ARG LINUX_DISTR_VER=7
 FROM $LINUX_DISTR:$LINUX_DISTR_VER
+ARG LINUX_DISTR=centos
 
 COPY . /opensdn-deployment-test
 
