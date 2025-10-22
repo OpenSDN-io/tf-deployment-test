@@ -1,7 +1,6 @@
 ARG LINUX_DISTR=centos
 ARG LINUX_DISTR_VER=7
 FROM $LINUX_DISTR:$LINUX_DISTR_VER
-ARG LINUX_DISTR=centos
 
 COPY . /opensdn-deployment-test
 
@@ -16,7 +15,7 @@ RUN cp /opensdn-deployment-test/testrunner.sh / && \
     find /etc/yum.repos.d/ | grep -i centos | xargs -r rm ; ls -l /etc/yum.repos.d/ ; \
     yum update -y -x "redhat-release*" -x "coreutils*" && \
     yum -y update-minimal --security --sec-severity=Important --sec-severity=Critical && \
-    yum install -y python3 python3-pip rsync openssh-clients && \
+    yum install -y python3 python3-pip rsync openssh-clients ansible-core && \
     pip3 install --upgrade --no-compile pip && \
     pip3 install --no-compile -r /opensdn-deployment-test/requirements.txt && \
     pip3 install --force urllib3==1.24.2 && \
