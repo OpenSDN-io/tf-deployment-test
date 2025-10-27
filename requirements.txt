@@ -1,7 +1,7 @@
 testrepository
 testtools
 paramiko
-python-subunit
+python-subunit<1.4.3
 junitxml
 fixtures
 contrail-api-client==2005
