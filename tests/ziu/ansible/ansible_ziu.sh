@@ -83,6 +83,22 @@ sed -i "s/CONTAINER_REGISTRY:.*/CONTAINER_REGISTRY: $CONTAINER_REGISTRY/g" $TF_C
 virtualenv $HOME/.venv.ziu
 source $HOME/.venv.ziu/bin/activate
 
+ansible_pkg="ansible<3"
+if [[ ${OPENSTACK_VERSION:0:6} == '2024.2' ]]; then
+    ansible_pkg="ansible<10"
+elif [[ ${OPENSTACK_VERSION:0:4} == '2023' || ${OPENSTACK_VERSION:0:4} == '2024' ]]; then
+    ansible_pkg="ansible<8"
+elif [[ ${OPENSTACK_VERSION:0:1} > 'x' || "$ORCHESTRATOR" == "kubernetes" ]]; then
+    ansible_pkg="ansible<6"
+fi
+export DISTRO=$(cat /etc/*release | egrep '^ID=' | awk -F= '{print $2}' | tr -d \")
+export DISTRO_VERSION_ID=$(cat /etc/*release | egrep '^VERSION_ID=' | awk -F= '{print $2}' | tr -d \")
+if [[ "$DISTRO" == "ubuntu" && "$DISTRO_VERSION_ID" == "24.04" ]]; then
+    # it has python 3.12 which is supported in ansible >=9
+    # TODO: check openstack_version and exit with error if unsupported for 24.04
+    ansible_pkg="ansible>=9,<10"
+fi
+
 # jinja is reqiured to create some configs
 LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 python3 -m pip install --upgrade "$ansible_pkg" 'jinja2==3.0.3' pyopenssl requests
 
